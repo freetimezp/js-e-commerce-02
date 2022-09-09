@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/sanity-e-commerce-02/node_modules
 /.pnp
 .pnp.js
 
