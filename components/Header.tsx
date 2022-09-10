@@ -38,7 +38,7 @@ function Header() {
                 {session ? (
                     <Image
                         src={
-                            session.user?.image ||
+                            // session.user?.image ||
                                 "http://p.favim.com/orig/2018/08/25/funny-anime-couple-avatar-Favim.com-6225080.jpg"
                         }
                         alt="user" width={34} height={34}
