@@ -3,7 +3,8 @@ module.exports = {
   reactStrictMode: true,
   images: {
     domains: [
-        "rb.gy"
+        "rb.gy",
+        "cdn.sanity.io"
     ]
   }
 }
