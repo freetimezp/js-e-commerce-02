@@ -2,11 +2,11 @@ import React ,{useState, useEffect} from "react";
 
 import Head from "next/head";
 import {useRouter} from "next/router";
-//import Currency from "react-currency-formatter";
+import Currency from "react-currency-formatter";
 //import Stripe from "stripe";
 import CheckoutProduct from "../components/CheckoutProduct";
 //import {fetchPostJSON} from "../utils/api-helpers";
-//import getStripe from "../utils/get-stropejs";
+//import getStripe from "../utils/get-stripejs";
 
 import Header from "../components/Header";
 import Button from "../components/Button";
@@ -19,6 +19,8 @@ import {ChevronDownIcon} from "@heroicons/react/24/solid";
 
 function Checkout() {
     const items = useSelector(selectBasketItems);
+    const basketTotal = useSelector(selectBasketTotal);
+
     const router = useRouter();
     const [groupedItemsInBasket, setGroupedItemsInBasket] = useState(
         {} as {[key: string]: Product[]}
@@ -58,6 +60,75 @@ function Checkout() {
                             {Object.entries(groupedItemsInBasket).map(([key, items]) => (
                                 <CheckoutProduct key={key} items={items} id={key} />
                             ))}
+
+                            <div className="my-12 mt-6 ml-auto max-w-3xl">
+                                <div className="divide-y divide-gray-300">
+                                    <div className="pb-4">
+                                        <div className="flex justify-between">
+                                            <p>Subtotal</p>
+                                            <p>
+                                                <Currency quantity={basketTotal} currency="USD" />
+                                            </p>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <p>Shipping</p>
+                                            <p>FREE</p>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <div className="flex flex-col gap-x-1 lg:flex-row">
+                                                Estimated tax for:{" "}
+                                                <p className="flex cursor-pointer items-end text-blue-500 hover:underline">
+                                                    Enter zip code
+                                                    <ChevronDownIcon className="h-6 w-6" />
+                                                </p>
+                                            </div>
+                                            <p>$ -</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between pt-4 text-xl font-semibold">
+                                        <h4>Total</h4>
+                                        <h4>
+                                            <Currency quantity={basketTotal} currency="USD" />
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div className="my-14 space-y-4">
+                                    <h4 className="text-xl font-semibold">
+                                        How would you like to check out?
+                                    </h4>
+                                    <div className="flex flex-col gap-4 md:flex-row">
+                                        <div className="order-2 flex flex-1 flex-col items-center rounded-xl bg-gray-200 p-8 py-12 text-center">
+                                            <h4 className="mb-4 flex flex-col text-xl font-semibold">
+                                                <span>Pay Monthly</span>
+                                                <span>with Apple Card</span>
+                                                <span>
+                                                    $ 283.16/mo. at 0% APR<sup className="-top-1">"</sup>
+                                                </span>
+                                            </h4>
+                                            <Button title="Check Out with Apple Card Monthly" width="w-full" />
+                                            <p className="mt-2 max-w-[240px] text-[13px]">
+                                                $0.00 due today, which includes applicable full-price
+                                                items, down payments, shipping and taxes
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-1 flex-col items-center rounded-xl bg-gray-200 p-8 py-12 space-y-8 md:order-2">
+                                            <h4 className="mb-4 flex flex-col text-xl font-semibold">
+                                                Pay in full
+                                                <span>
+                                                    <Currency quantity={basketTotal} currency="USD" />
+                                                </span>
+                                            </h4>
+                                            <Button
+                                                title="Check Out" noIcon width="w-full"
+                                                // loading={loading} onClick={createCheckoutSession}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
