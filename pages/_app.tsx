@@ -5,12 +5,17 @@ import {Provider} from "react-redux";
 import {store} from "../redux/store";
 import {Toaster} from "react-hot-toast";
 
-function MyApp({Component, pageProps}: AppProps) {
+import {SessionProvider} from "next-auth/react";
+
+// @ts-ignore
+function MyApp({Component, pageProps: {session, ...pageProps}}: AppProps) {
     return (
-        <Provider store={store}>
-            <Toaster />
-            <Component {...pageProps} />
-        </Provider>
+        <SessionProvider session={session}>
+            <Provider store={store}>
+                <Toaster />
+                <Component {...pageProps} />
+            </Provider>
+        </SessionProvider>
     );
 }
 

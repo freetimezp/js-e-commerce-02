@@ -4,7 +4,8 @@ module.exports = {
   images: {
     domains: [
         "rb.gy",
-        "cdn.sanity.io"
+        "cdn.sanity.io",
+        "lh3.googleusercontent.com"
     ]
   }
 }

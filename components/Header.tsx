@@ -6,9 +6,10 @@ import {MagnifyingGlassIcon, ShoppingBagIcon, UserIcon} from "@heroicons/react/2
 import {selectBasketItems} from "../redux/basketSlice";
 import {useSelector} from "react-redux";
 
+import {signIn, signOut, useSession} from "next-auth/react";
 
 function Header() {
-    const session = false;
+    const {data: session} = useSession();
     const items = useSelector(selectBasketItems);
 
     return (
@@ -46,17 +47,14 @@ function Header() {
                 {session ? (
                     <Image
                         src={
-                            // session.user?.image ||
+                             session.user?.image ||
                                 "http://p.favim.com/orig/2018/08/25/funny-anime-couple-avatar-Favim.com-6225080.jpg"
                         }
                         alt="user" width={34} height={34}
-                        // onClick={() => signOut()}
+                        onClick={() => signOut()}
                     />
                 ) : (
-                    <UserIcon
-                        className="headerIcon"
-                        // onClick={() => signIn()}
-                    />
+                    <UserIcon className="headerIcon" onClick={() => signIn()} />
                 )}
             </div>
         </header>
