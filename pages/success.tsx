@@ -13,6 +13,8 @@ import {useMediaQuery} from "react-responsive";
 import {GetServerSideProps} from "next";
 import {fetchLineItems} from "../utils/fetchLineItems";
 
+import {useSession} from "next-auth/react";
+
 interface Props {
     products: StripeProduct[]
 }
@@ -25,6 +27,8 @@ function Success({products}: Props) {
     const [showOrderSummary, setShowOrderSummary] = useState(false);
 
     const subtotal = products.reduce((acc, product) => acc + product.price.unit_amount / 100, 0);
+
+    const {data: session} = useSession();
 
     useEffect(() => {
         setMounted(true);
@@ -69,7 +73,7 @@ function Success({products}: Props) {
                             <p className="text-sm text-gray-600">Order #...{session_id?.slice(-5)}</p>
                             <h4 className="text-lg">
                                 Thank You {" "}
-                                {/*{session ? session.user?.name?.split(" ")[0] : "Guest"};*/}
+                                {session ? session.user?.name?.split(" ")[0] : "Guest"}
                             </h4>
                         </div>
                     </div>
